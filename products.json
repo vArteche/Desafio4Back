@@ -1,0 +1,93 @@
+[
+	{
+		"id": 1,
+		"title": "Buzo",
+		"description": "Camiseta de algodón",
+		"price": 25.99,
+		"thumbnail": "camiseta.jpg",
+		"code": "C001",
+		"stock": 60
+	},
+	{
+		"id": 2,
+		"title": "Remerón",
+		"description": "Remerón Oversize de algodón",
+		"price": 37.99,
+		"thumbnail": "remeron.jpg",
+		"code": "C002",
+		"stock": 36
+	},
+	{
+		"id": 3,
+		"title": "Medias",
+		"description": "Medias de algodón",
+		"price": 37.99,
+		"thumbnail": "medias.jpg",
+		"code": "C003",
+		"stock": 36
+	},
+	{
+		"id": 4,
+		"title": "Remerón Verde",
+		"description": "Remerón Oversize de algodón color verde",
+		"price": 37.99,
+		"thumbnail": "remeronverde.jpg",
+		"code": "C004",
+		"stock": 36
+	},
+	{
+		"id": 5,
+		"title": "Calza Térmica",
+		"description": "Calza térmica talle único",
+		"price": 37.99,
+		"thumbnail": "calzatermica.jpg",
+		"code": "C005",
+		"stock": 36
+	},
+	{
+		"id": 6,
+		"title": "Calzoncillos largos",
+		"description": "Calzoncillos largos de algodón",
+		"price": 37.99,
+		"thumbnail": "calzoncilloslargos.jpg",
+		"code": "C006",
+		"stock": 36
+	},
+	{
+		"id": 7,
+		"title": "Traje de baño",
+		"description": "Traje de baño liso",
+		"price": 37.99,
+		"thumbnail": "trajedebano.jpg",
+		"code": "C007",
+		"stock": 36
+	},
+	{
+		"id": 8,
+		"title": "Cinturón",
+		"description": "Cinturón de cuero",
+		"price": 37.99,
+		"thumbnail": "cinturon.jpg",
+		"code": "C008",
+		"stock": 36
+	},
+	{
+		"id": 9,
+		"title": "Camisa de hombre",
+		"description": "Camisa de hombre a lunares",
+		"price": 37.99,
+		"thumbnail": "camisahombre.jpg",
+		"code": "C009",
+		"stock": 36
+	},
+	{
+		"id": 10,
+		"title": "Bufanda",
+		"description": "Bufanda a rayas",
+		"price": 37.99,
+		"thumbnail": "bufanda.jpg",
+		"code": "C010",
+		"stock": 36
+	}
+
+]
