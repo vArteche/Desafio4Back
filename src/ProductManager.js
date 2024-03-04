@@ -48,7 +48,7 @@ class ProductManager {
         try {
             const data = await fs.readFile(this.path, "utf-8");
             return JSON.parse(data);
-            this.products = products
+            
         } catch (error) {
             console.error("ERROR al leer el archivo", error);
             return [];
@@ -56,15 +56,23 @@ class ProductManager {
         
     }
 
-    getProductById(id) {
-        const product = this.products.find(product => product.id === id);
-        if (product) {
-            return product;
-            this.products = products
-        } else {
-            throw new Error("Producto no encontrado.");
+    async getProductById(id) {
+        try {
+            const products = await JSON.parse(await fs.readFile(this.path, "utf-8"));
+            const productById = products.find(product => product.id == id);
+            if (productById) {
+                return productById;
+            } else {
+                console.log(products)
+                throw new Error("Producto no encontrado.");
+                
+            }
+        } catch (error) {
+            throw new Error("Error al obtener el producto por ID: " + error.message);
         }
     }
+    
+
 
     async updateProduct(id, updatedProductData) {
         try {
@@ -110,63 +118,4 @@ class ProductManager {
         }
     }
 }
-
-// Uso
-
-// const manager = new ProductManager();
-
-// (async () => {
-//     const productData = {
-//         title: "Camiseta",
-//         description: "Camiseta de algodón",
-//         price: 19.99,
-//         thumbnail: "camiseta.jpg",
-//         code: "C001",
-//         stock: 50,
-//     };
-
-//     await manager.addProduct(productData);
-
-//     const productData2 = {
-//         title: "Pantalón",
-//         description: "Pantalón vaquero",
-//         price: 31.99,
-//         thumbnail: "pantalon.jpg",
-//         code: "C002",
-//         stock: 36,
-//     };
-
-//     await manager.addProduct(productData2);
-
-//     const productList = await manager.getProducts();
-//     console.log("Lista de productos:", productList);
-
-//     const getById = manager.getProductById(1);
-//     console.log("Producto con ID 1:", getById);
-
-//     const updatedData = {
-//         title: "Buzo",
-//         price: 25.99,
-//         stock: 60
-//     };
-//     await manager.updateProduct(1, updatedData);
-
-//     await manager.deleteProduct(2);
-
-//     const productData3 = {
-//         title: "Remerón",
-//         description: "Remerón Oversize de algodón",
-//         price: 37.99,
-//         thumbnail: "remeron.jpg",
-//         code: "C003",
-//         stock: 36,
-//     }
-
-//     await manager.addProduct(productData3);
-    
-//     const updatedProductList = await manager.getProducts();
-//     console.log("Lista de productos actualizada:", updatedProductList);
-// })();
-
-
 export default ProductManager;

@@ -4,27 +4,40 @@ import PM from './ProductManager.js';
 const app = express();
 const PORT = 8080;
 
-app.use(express.urlencoded({extended : true}));
+app.use(express.urlencoded({ extended: true }));
 
-const products = new PM;
+const productsManager = new PM();
 
-app.get('/products/', (req, res)=>{
-    let limit = req.query;
+app.get('/products/', async (req, res) => {
+    try {
+        const limit = parseInt(req.query.limit);
+        let products;
+        if (!limit || isNaN(limit)) {
+            products = await productsManager.getProducts();
+        } else {
+            const allProducts = await productsManager.getProducts();
+            products = allProducts.slice(0, limit);
+        }
 
-    if(!limit){
-        res.send(products)
-    }else{
-        // let i = 0;
-        // for(products[i]; products[limit]; i++){
-        //     products.forEach(product => {
-        //         return product;
-        //     });
-        // }
+        res.send(products);
+    } catch (error) {
+        console.error('ERROR al obtener productos', error);
+        res.status(500).send('Error al obtener productos');
     }
-})
+});
 
-    
+app.get('/products/:pid', async (req, res) => {
+    try {
+        const pid = req.params.pid;
+        const productById = await productsManager.getProductById(pid);
+        res.send(productById);
+    } catch (error) {
+        console.error('ERROR al obtener el producto', error);
+        res.status(500).send('Error al obtener el producto');
+    }
+});
 
-app.listen(PORT, ()=>[
-    console.log(`Listening on port ${PORT}`)
-])
+
+app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`);
+});
