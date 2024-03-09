@@ -88,6 +88,14 @@
 		"thumbnail": "bufanda.jpg",
 		"code": "C010",
 		"stock": 36
+	},
+	{
+		"id": 11,
+		"title": "zapallitos",
+		"description": "zapallito x kg",
+		"price": 320,
+		"thumbnail": "zapallito.jpg",
+		"code": "Z001",
+		"stock": 10
 	}
-
 ]
