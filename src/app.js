@@ -1,6 +1,6 @@
 import express from 'express';
 import productRouter from './routes/products.js';
-import cartRouter from './routes/cart.js';
+import CartRouter from './routes/cart.js';
 
 const app = express();
 const PORT = 8080;
@@ -8,9 +8,14 @@ const PORT = 8080;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use('/api/carts', cartRouter)
+const cartRouter = new CartRouter();
+cartRouter.createCart();
+cartRouter.getCart();
+cartRouter.addProductToCart();
 
-app.use('/api/products', productRouter)
+app.use(cartRouter.getRouter());
+
+app.use('/api/products/', productRouter)
 
 
 app.listen(PORT, () => {
