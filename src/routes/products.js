@@ -69,17 +69,15 @@ const productRouter = new ProductRouter();
 router.get('/', async (req, res) => {
     try {
         const limit = parseInt(req.query.limit);
-        let products;
-        if (!limit || isNaN(limit)) {
-            products = await productRouter.getProducts();
-        } else {
-            products = await productRouter.getProducts().slice(0, limit);
+        let products = await productRouter.getProducts();
+        if (limit && !isNaN(limit)) {
+            products = products.slice(0, limit);
         }
         res.send(products);
-    } catch (error) {
-        console.error('ERROR al obtener productos', error);
-        res.status(500).send('Error al obtener productos');
-    }
+        } catch (error) {
+            console.error('ERROR al obtener productos', error);
+            res.status(500).send('Error al obtener productos');
+        }
 });
 
 router.get('/:pid', async (req, res) => {
@@ -103,7 +101,11 @@ router.post('/', async (req, res) => {
         if (!title || !description || !price || !thumbnail || !code || !stock) {
             return res.status(400).send({ error: "Faltan datos para crear el producto." });
         }
-        const newProduct = await productRouter.addProduct({ title, description, price, thumbnail, code, stock });
+        // Verificar si el código ya existe en la lista de productos
+        if (productsManager.products.some(product => product.code === code)) {
+            return res.status(400).send({ error: "El código ingresado ya le pertenece a un producto." });
+        }
+        const newProduct = await productsManager.addProduct({ title, description, price, thumbnail, code, stock });
         res.status(201).send({ message: "Producto creado correctamente!", product: newProduct });
     } catch (error) {
         console.error('ERROR al agregar el producto', error);
