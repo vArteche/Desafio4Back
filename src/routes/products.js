@@ -98,13 +98,15 @@ router.get('/:pid', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const { title, description, price, thumbnail, code, stock } = req.body;
-        if (!title || !description || !price || !thumbnail || !code || !stock) {
+        if (!title || !description || !price || !code || !stock) {
             return res.status(400).send({ error: "Faltan datos para crear el producto." });
         }
         // Verificar si el código ya existe en la lista de productos
         if (productsManager.products.some(product => product.code === code)) {
             return res.status(400).send({ error: "El código ingresado ya le pertenece a un producto." });
         }
+        thumbnail ? thumbnail : [];
+
         const newProduct = await productsManager.addProduct({ title, description, price, thumbnail, code, stock });
         res.status(201).send({ message: "Producto creado correctamente!", product: newProduct });
     } catch (error) {
