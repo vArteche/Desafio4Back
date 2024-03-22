@@ -102,12 +102,12 @@ router.post('/', async (req, res) => {
             return res.status(400).send({ error: "Faltan datos para crear el producto." });
         }
         // Verificar si el código ya existe en la lista de productos
-        if (productsManager.products.some(product => product.code === code)) {
+        if (productRouter.products.some(product => product.code === code)) {
             return res.status(400).send({ error: "El código ingresado ya le pertenece a un producto." });
         }
         thumbnail ? thumbnail : [];
 
-        const newProduct = await productsManager.addProduct({ title, description, price, thumbnail, code, stock });
+        const newProduct = await productRouter.addProduct({ title, description, price, thumbnail, code, stock });
         res.status(201).send({ message: "Producto creado correctamente!", product: newProduct });
     } catch (error) {
         console.error('ERROR al agregar el producto', error);

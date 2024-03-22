@@ -1,7 +1,7 @@
 import express from 'express';
 import handlebars from 'express-handlebars';
 import { readFile } from 'fs/promises';
-import {Server} from 'socket.io';
+import { Server } from 'socket.io';
 
 import productRouter from './routes/products.js';
 import CartRouter from './routes/cart.js';
@@ -15,17 +15,10 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const httpServer = app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`);
-});
 
-const socketServer = new Server(httpServer);
-
-socketServer.on('connection', socket=>{
-    console.log('Nuevo cliente conectado!')
-});
-
-
+app.engine('handlebars', handlebars.engine());
+app.set('views', `${__dirname}/views`);
+app.set('view engine', 'handlebars');
 
 const filePath =`../PrimeraPreEntrega/products.json` ;
 let products = [];
@@ -35,30 +28,51 @@ try {
     products = JSON.parse(jsonData);
 } catch (error) {
     console.error('Error al leer el archivo JSON:', error);
-};
+}
 
-//handlebars
-app.engine('handlebars', handlebars.engine());
-app.set('views', `${__dirname}/views`);
-app.set('view engine', 'handlebars');
-
-
-
-
-// app.get('/realtimeproducts', (req, res)=>{
-//     res.render('index', {products});
-// })
 
 const cartRouter = new CartRouter();
 cartRouter.createCart();
 cartRouter.getCart();
 cartRouter.addProductToCart();
-
 app.use(cartRouter.getRouter());
+
 
 app.use('/api/products/', productRouter);
 
-app.use('/', viewsRouter)
-// app.get('/', (req, res)=>{
-//     res.render('index', {products});
-// });
+
+app.use('/', viewsRouter);
+
+
+const httpServer = app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`);
+});
+
+
+const socketServer = new Server(httpServer);
+
+
+socketServer.on('connection', socket => {
+    console.log('Nuevo cliente conectado!');
+
+    socket.on('message', data =>{
+        console.log('desde el cliente: ', data)
+    });
+
+    socket.on('add-product', async productData => {
+        try {
+            const newProduct = await productRouter.addProduct(productData);
+            console.log('Producto agregado correctamente:', newProduct);
+        } catch (error) {
+            console.error('Error al agregar el producto:', error);
+        }
+    });
+});
+
+app.get('/', (req, res)=>{
+    res.render('index', {products});
+});
+
+app.get('/realtimeproducts', (req, res)=>{
+    res.render('realtimeproducts', {products});
+});

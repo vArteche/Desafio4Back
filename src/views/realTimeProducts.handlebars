@@ -1,5 +1,28 @@
 <div>
     <h1>Productos</h1>
+<body>
+    <h1>Add Product</h1>
+    <form id="product-form">
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title"><br>
+        
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description"></textarea><br>
+        
+        <label for="price">Price:</label><br>
+        <input type="number" id="price" name="price"><br>
+        
+        <label for="thumbnail">Thumbnail URL:</label><br>
+        <input type="text" id="thumbnail" name="thumbnail"><br>
+        
+        <label for="code">Code:</label><br>
+        <input type="text" id="code" name="code"><br>
+        
+        <label for="stock">Stock:</label><br>
+        <input type="number" id="stock" name="stock"><br><br>
+        
+        <input type="submit" value="Submit">
+    </form>
     <ul>
         {{#each products}}
         <h3>{{this.title}}</h3>
@@ -10,3 +33,5 @@
         {{/each}}
     </ul>
 </div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>
