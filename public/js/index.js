@@ -13,3 +13,9 @@ const form = document.getElementById('product-form');
         });
         socket.emit('add-product', productData);
     });
+
+    socket.on('products', (products) => {
+
+        console.log('PRODUCTS AFTER ADD NEW PRODUCT',products)
+        
+        })

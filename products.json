@@ -98,5 +98,14 @@
 		"code": "C010",
 		"stock": 36,
 		"status": true
+	},
+	{
+		"id": 11,
+		"title": "b",
+		"description": "b",
+		"price": "1",
+		"thumbnail": "manzana.jpg",
+		"code": "11111",
+		"stock": "3"
 	}
 ]

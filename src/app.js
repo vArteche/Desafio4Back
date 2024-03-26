@@ -3,6 +3,7 @@ import handlebars from 'express-handlebars';
 import { readFile } from 'fs/promises';
 import { Server } from 'socket.io';
 
+import productManager from './ProductManager.js';
 import productRouter from './routes/products.js';
 import CartRouter from './routes/cart.js';
 import __dirname from './utils.js';
@@ -20,7 +21,7 @@ app.engine('handlebars', handlebars.engine());
 app.set('views', `${__dirname}/views`);
 app.set('view engine', 'handlebars');
 
-const filePath =`../PrimeraPreEntrega/products.json` ;
+const filePath =`../Desafio4Back/products.json` ;
 let products = [];
 
 try {
@@ -51,6 +52,7 @@ const httpServer = app.listen(PORT, () => {
 
 const socketServer = new Server(httpServer);
 
+const ProductManager = new productManager;
 
 socketServer.on('connection', socket => {
     console.log('Nuevo cliente conectado!');
@@ -59,14 +61,17 @@ socketServer.on('connection', socket => {
         console.log('desde el cliente: ', data)
     });
 
-    socket.on('add-product', async productData => {
+    socket.on('add-product', async productData=> {
         try {
-            const newProduct = await productRouter.addProduct(productData);
-            console.log('Producto agregado correctamente:', newProduct);
+        console.log('ProductData',productData)
+        const newProduct= await ProductManager.addProduct(productData);
+        console.log('Producto agregado correctamente:',newProduct);
+        const products= await ProductManager.getProducts()
+        socket.emit('products',products)
         } catch (error) {
-            console.error('Error al agregar el producto:', error);
-        }
-    });
+        console.error('Error al agregar el producto:',error);
+        };
+        });
 });
 
 app.get('/', (req, res)=>{
