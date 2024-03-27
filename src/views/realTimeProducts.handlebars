@@ -23,7 +23,7 @@
         
         <input type="submit" value="Submit">
     </form>
-    <ul>
+    <div id="productsContainer">
         {{#each products}}
         <h3>{{this.title}}</h3>
         <p>${{this.price}}</p>
@@ -31,7 +31,7 @@
         <p>{{this.thumbnail}}</p>
         <p>stock: {{this.stock}}</p>
         {{/each}}
-    </ul>
+    </div>
 </div>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js"></script>

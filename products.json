@@ -107,5 +107,23 @@
 		"thumbnail": "manzana.jpg",
 		"code": "11111",
 		"stock": "3"
+	},
+	{
+		"id": 12,
+		"title": "Papa frita",
+		"description": "papitas",
+		"price": "14",
+		"thumbnail": "papitas.jpg",
+		"code": "P004",
+		"stock": "20"
+	},
+	{
+		"id": 13,
+		"title": "s",
+		"description": "s",
+		"price": "5",
+		"thumbnail": "papitas.jpg",
+		"code": "sssss",
+		"stock": "5"
 	}
 ]

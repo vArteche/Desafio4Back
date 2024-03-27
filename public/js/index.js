@@ -15,7 +15,18 @@ const form = document.getElementById('product-form');
     });
 
     socket.on('products', (products) => {
-
-        console.log('PRODUCTS AFTER ADD NEW PRODUCT',products)
-        
-        })
+        const productsContainer = document.getElementById("productsContainer");
+        let productHTML= "";
+        products.forEach((product) => {
+            productHTML += `
+                <div class="productCard">
+                    <img class="productThumbnail" src="${product.thumbnails}" alt="Image for ${product.title}">
+                    <div class="productDetails">
+                        <p class="productTitle">${product.title}</p>
+                    </div>
+                </div>`;
+        });
+        productsContainer.innerHTML = productHTML;
+        console.log('PRODUCTS AFTER ADD NEW PRODUCT', products);
+    });
+    

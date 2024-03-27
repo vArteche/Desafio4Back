@@ -61,17 +61,17 @@ socketServer.on('connection', socket => {
         console.log('desde el cliente: ', data)
     });
 
-    socket.on('add-product', async productData=> {
+    socket.on('add-product', async productData => {
         try {
-        console.log('ProductData',productData)
-        const newProduct= await ProductManager.addProduct(productData);
-        console.log('Producto agregado correctamente:',newProduct);
-        const products= await ProductManager.getProducts()
-        socket.emit('products',products)
+            console.log('ProductData', productData);
+            const newProduct = await ProductManager.addProduct(productData);
+            console.log('Producto agregado correctamente:', newProduct);
+            const products = await ProductManager.getProducts();
+            socket.emit('products', products);
         } catch (error) {
-        console.error('Error al agregar el producto:',error);
-        };
-        });
+            console.error('Error al agregar el producto:', error);
+        }
+    });
 });
 
 app.get('/', (req, res)=>{
